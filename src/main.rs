@@ -1,7 +1,7 @@
 mod lib;
 
-use lib::{run, Config};
-use std::{env, process};
+use std::env;
+use std::process;
 
 fn show_help() {
     println!("{} {}", env::args().nth(0).expect("minigrep"), "-Like grep");
@@ -28,12 +28,12 @@ fn main() {
         process::exit(0);
     }
 
-    let config = Config::new(&args).unwrap_or_else(|err| {
+    let config = lib::Config::new(&args).unwrap_or_else(|err| {
         eprintln!("Problem parsing arguments: {}. {}", err, "Use --help for help");
         process::exit(1);
     });
 
-    if let Err(e) = run(config) {
+    if let Err(e) = lib::run(config) {
         eprintln!("Application error: {}", e);
         process::exit(1);
     };
